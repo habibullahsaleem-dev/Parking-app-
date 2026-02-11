@@ -1,0 +1,156 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Simple Parking App</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            background-color: #f5f5f5;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+
+        .parking-container {
+            background-color: #ffffff;
+            padding: 30px 40px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0,0,0,0.1);
+            width: 420px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #2c3e50;
+        }
+
+        label {
+            display: block;
+            margin-top: 15px;
+            font-weight: bold;
+        }
+
+        input, select {
+            width: 100%;
+            padding: 8px 10px;
+            margin-top: 5px;
+            border-radius: 5px;
+            border: 1px solid #ccc;
+        }
+
+        button {
+            width: 100%;
+            margin-top: 20px;
+            padding: 10px;
+            background-color: #16a085;
+            color: white;
+            font-size: 16px;
+            border: none;
+            border-radius: 5px;
+            cursor: pointer;
+        }
+
+        button:hover {
+            background-color: #138d75;
+        }
+
+        .parking-list {
+            margin-top: 25px;
+        }
+
+        .parking-list li {
+            background-color: #ecf0f1;
+            margin: 5px 0;
+            padding: 8px;
+            border-radius: 5px;
+            font-size: 14px;
+        }
+
+        .rent-box {
+            margin-top: 10px;
+            font-weight: bold;
+            color: #2c3e50;
+        }
+    </style>
+</head>
+<body>
+
+<div class="parking-container">
+    <h1>Parking App</h1>
+
+    <form id="parkingForm">
+        <label>Car Number</label>
+        <input type="text" id="carNumber" required>
+
+        <label>Car Type</label>
+        <select id="carType" required>
+            <option value="">Select Car</option>
+            <option value="City">City</option>
+            <option value="Mehran">Mehran</option>
+            <option value="Honda">Honda</option>
+            <option value="Civic">Civic</option>
+            <option value="BMW">BMW</option>
+            <option value="Ferrari">Ferrari</option>
+            <option value="Fortuner">Fortuner</option>
+        </select>
+
+        <div class="rent-box">
+            Rent: <span id="rentAmount">0</span> PKR / hour
+        </div>
+
+        <label>Parking Slot</label>
+        <input type="text" id="parkingSlot" required>
+
+        <button type="submit">Park Car</button>
+    </form>
+
+    <div class="parking-list">
+        <h3>Parked Cars</h3>
+        <ul id="carList"></ul>
+    </div>
+</div>
+
+<script>
+    const carType = document.getElementById('carType');
+    const rentAmount = document.getElementById('rentAmount');
+    const carList = document.getElementById('carList');
+    const form = document.getElementById('parkingForm');
+
+    // Rent chart
+    const rentChart = {
+        City: 100,
+        Mehran: 80,
+        Honda: 120,
+        Civic: 150,
+        BMW: 300,
+        Ferrari: 500,
+        Fortuner: 250
+    };
+
+    // Update rent when car selected
+    carType.addEventListener('change', function () {
+        rentAmount.textContent = rentChart[this.value] || 0;
+    });
+
+    // Park car
+    form.addEventListener('submit', function (e) {
+        e.preventDefault();
+
+        const carNumber = document.getElementById('carNumber').value;
+        const car = carType.value;
+        const slot = document.getElementById('parkingSlot').value;
+        const rent = rentChart[car];
+
+        const li = document.createElement('li');
+        li.textContent = `Car: ${carNumber} | Type: ${car} | Slot: ${slot} | Rent: ${rent} PKR/hr`;
+
+        carList.appendChild(li);
+        form.reset();
+        rentAmount.textContent = 0;
+    });
+</script>
+
+</body>
+</html>
+

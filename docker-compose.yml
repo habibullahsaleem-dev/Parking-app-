@@ -1,0 +1,15 @@
+version: '3.9'
+
+services:
+  app1:
+    build: ./app1
+    container_name: app1_container
+    ports:
+      - "8081:80"  # Host 8080 → Container 80
+
+  app2:
+    build: ./app2
+    container_name: app2_container
+    ports:
+      - "8080:80"  # Host 8081 → Container 80
+
